@@ -22,6 +22,8 @@ pub struct SnowWorkerM1 {
     pub min_seq_number: u32,
     ///最大漂移次数
     pub top_over_cost_count: u32,
+    /// 流水序列之间的步长。
+    pub seq_step: u32,
 
     _timestamp_shift: u8,
     _current_seq_number: u32,
@@ -125,6 +127,9 @@ impl SnowWorkerM1 {
         self._timestamp_shift = self.worker_id_bit_length + self.seq_bit_length;
         self._current_seq_number = self.min_seq_number;
 
+        // 9.SeqStep
+        self.seq_step = options.seq_step as u32;
+
         if options.method == 1 {
             sleep(std::time::Duration::from_millis(500));
         }
@@ -139,6 +144,7 @@ impl SnowWorkerM1 {
             max_seq_number: 0,
             min_seq_number: 0,
             top_over_cost_count: 0,
+            seq_step: 1,
             _timestamp_shift: 0,
             _current_seq_number: 0,
 
@@ -269,7 +275,7 @@ impl SnowWorkerM1 {
         let result = (use_time_tick << self._timestamp_shift)
             + (self.worker_id << self.seq_bit_length) as i64
             + (self._current_seq_number) as i64;
-        self._current_seq_number += 1;
+        self._current_seq_number += self.seq_step;
         return result;
     }
 
