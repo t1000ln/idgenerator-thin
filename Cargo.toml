@@ -1,6 +1,6 @@
 [package]
 name = "idgenerator-thin"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 authors = ["yitter <yitter@126.com>"]
 license = "MIT"
@@ -9,8 +9,9 @@ readme = "README.md"
 homepage = "https://github.com/t1000ln/idgenerator-thin"
 repository = "https://github.com/t1000ln/idgenerator-thin"
 keywords = ["snowflake", "idgenerator"]
+categories = ["concurrency"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-chrono = "^0.4.31"
+chrono = "0"

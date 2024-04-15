@@ -55,7 +55,7 @@ impl IdGeneratorOptions {
     ///
     /// ```
     pub fn new(worker_id: u32) -> IdGeneratorOptions {
-        return IdGeneratorOptions {
+        IdGeneratorOptions {
             method: 1,
             worker_id,
             base_time: 1582136402000,
@@ -65,6 +65,6 @@ impl IdGeneratorOptions {
             min_seq_number: 5,
             top_over_cost_count: 2000,
             seq_step: 1,
-        };
+        }
     }
 }

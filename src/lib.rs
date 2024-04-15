@@ -3,7 +3,6 @@ pub use idgen::*;
 
 #[cfg(test)]
 mod tests {
-    use std::fmt::Debug;
     use chrono::{DateTime, Utc};
     use crate::{IdGeneratorOptions, YitIdHelper};
 

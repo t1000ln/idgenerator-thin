@@ -39,7 +39,7 @@ pub struct SnowWorkerM1 {
 impl SnowWorkerM1 {
     pub fn default() -> SnowWorkerM1 {
         let options = IdGeneratorOptions::new(1);
-        return SnowWorkerM1::new(options);
+        SnowWorkerM1::new(options)
     }
 
     pub fn set_options(&mut self, options: IdGeneratorOptions) {
@@ -55,14 +55,14 @@ impl SnowWorkerM1 {
         }
 
         // 2.WorkerIdBitLength
-        if options.worker_id_bit_length <= 0 {
+        if options.worker_id_bit_length == 0 {
             panic!("WorkerIdBitLength error.(range:[1, 21])");
         }
         if options.seq_bit_length + options.worker_id_bit_length > 22 {
             panic!("error：WorkerIdBitLength + SeqBitLength <= 22");
         } else {
             // self.WorkerIdBitLength = options.WorkerIdBitLength;
-            self.worker_id_bit_length = if options.worker_id_bit_length <= 0 {
+            self.worker_id_bit_length = if options.worker_id_bit_length == 0 {
                 6
             } else {
                 options.worker_id_bit_length
@@ -85,7 +85,7 @@ impl SnowWorkerM1 {
             panic!("SeqBitLength error. (range:[2, 21])");
         } else {
             // self.SeqBitLength = options.SeqBitLength;
-            self.seq_bit_length = if options.seq_bit_length <= 0 {
+            self.seq_bit_length = if options.seq_bit_length == 0 {
                 6
             } else {
                 options.seq_bit_length
@@ -94,7 +94,7 @@ impl SnowWorkerM1 {
 
         // 5.MaxSeqNumber
         let mut max_seq_number = (1 << options.seq_bit_length) - 1;
-        if options.max_seq_number <= 0 {
+        if options.max_seq_number == 0 {
             max_seq_number = 63;
         }
         if options.max_seq_number > max_seq_number {
@@ -158,7 +158,7 @@ impl SnowWorkerM1 {
         };
 
         worker.set_options(options);
-        return worker;
+        worker
     }
 
     pub fn next_id(&mut self) -> i64 {
@@ -220,7 +220,7 @@ impl SnowWorkerM1 {
         }
 
         self._gen_count_in_one_term += 1;
-        return self.calc_id(self._last_time_tick);
+        self.calc_id(self._last_time_tick)
     }
 
     fn next_normal_id(&mut self) -> i64 {
@@ -268,7 +268,7 @@ impl SnowWorkerM1 {
             return self.calc_id(self._last_time_tick);
         }
 
-        return self.calc_id(self._last_time_tick);
+        self.calc_id(self._last_time_tick)
     }
 
     fn calc_id(&mut self, use_time_tick: i64) -> i64 {
@@ -276,7 +276,7 @@ impl SnowWorkerM1 {
             + (self.worker_id << self.seq_bit_length) as i64
             + (self._current_seq_number) as i64;
         self._current_seq_number += self.seq_step;
-        return result;
+        result
     }
 
     fn calc_turn_back_id(&mut self, use_time_tick: i64) -> i64 {
@@ -284,11 +284,11 @@ impl SnowWorkerM1 {
             + (self.worker_id << self.seq_bit_length) as i64
             + (self._turn_back_index) as i64;
         self._turn_back_time_tick -= 1;
-        return result;
+        result
     }
 
     fn get_current_time_tick(&self) -> i64 {
-        return Utc::now().timestamp_millis() - self.base_time;
+        Utc::now().timestamp_millis() - self.base_time
     }
 
     fn get_next_time_tick(&self) -> i64 {
@@ -300,6 +300,6 @@ impl SnowWorkerM1 {
             temp_time_ticker = self.get_current_time_tick();
         }
 
-        return temp_time_ticker;
+        temp_time_ticker
     }
 }

@@ -10,8 +10,14 @@ pub struct DefaultIdGenerator {
     pub worker: SnowWorkerM1,
 }
 
-impl DefaultIdGenerator {
-    pub fn default() -> DefaultIdGenerator {
+impl Default for DefaultIdGenerator {
+    fn default() -> Self {
         DefaultIdGenerator { worker: SnowWorkerM1::default() }
     }
 }
+
+// impl DefaultIdGenerator {
+//     pub fn default() -> DefaultIdGenerator {
+//         DefaultIdGenerator { worker: SnowWorkerM1::default() }
+//     }
+// }
